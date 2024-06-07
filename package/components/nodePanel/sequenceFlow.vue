@@ -6,6 +6,10 @@
           <el-button size="small" @click="dialogName = 'executionListenerDialog'">编辑</el-button>
         </el-badge>
       </template>
+      <template #conditionExpressionBtn>
+        <el-button size="small" @click="generateExpression">生成</el-button>
+        <el-button size="small" @click="clearExpression">清空</el-button>
+      </template>
     </x-form>
     <executionListenerDialog
       v-if="dialogName === 'executionListenerDialog'"
@@ -35,13 +39,14 @@ export default {
           {
             xType: 'input',
             name: 'id',
-            label: '节点 id',
-            rules: [{ required: true, message: 'Id 不能为空' }]
+            label: '节点编码',
+            rules: [{ required: true, message: '节点编码不能为空' }]
           },
           {
             xType: 'input',
             name: 'name',
-            label: '节点名称'
+            label: '节点名称',
+            rules: [{ required: true, message: '节点名称 不能为空' }]
           },
           {
             xType: 'input',
@@ -56,7 +61,13 @@ export default {
           {
             xType: 'input',
             name: 'conditionExpression',
-            label: '跳转条件'
+            label: '跳转条件',
+            disabled: true
+          },
+          {
+            xType: 'slot',
+            name: 'conditionExpressionBtn',
+            label: '跳转条件生成'
           },
           {
             xType: 'input',
@@ -73,7 +84,7 @@ export default {
         const newCondition = this.modeler.get('moddle').create('bpmn:FormalExpression', { body: val })
         this.updateProperties({ conditionExpression: newCondition })
       } else {
-        this.updateProperties({ conditionExpression: null })
+        this.updateProperties({ conditionExpression: undefined })
       }
     },
     'formData.skipExpression': function(val) {
@@ -85,6 +96,21 @@ export default {
     let cache = commonParse(this.element)
     cache = conditionExpressionParse(cache)
     this.formData = cache
+  },
+  methods: {
+    // 生成表达式
+    generateExpression(){
+      this.formData.conditionExpression = "${conditionVerify.verifyExpression(execution,'"+this.formData.id+"')}"
+      const newCondition = this.modeler.get('moddle').create('bpmn:FormalExpression', { body: "${conditionVerify.verifyExpression(execution,'"+this.formData.id+"')}" })
+      this.updateProperties({ conditionExpression:  newCondition})
+      let cache = commonParse(this.element)
+      cache = conditionExpressionParse(cache)
+      this.formData = cache
+    },
+    // 清空表达式
+    clearExpression(){
+      this.formData.conditionExpression = undefined
+    }
   }
 }
 </script>

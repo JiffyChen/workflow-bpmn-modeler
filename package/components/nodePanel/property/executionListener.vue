@@ -6,8 +6,9 @@
       width="900px"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
-      :show-close="false"
+      :show-close="true"
       @closed="$emit('close')"
+      append-to-body
     >
       <x-form ref="xForm" v-model="formData" :config="formConfig">
         <template #params="scope">
@@ -18,6 +19,7 @@
       </x-form>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" size="medium" @click="closeDialog">确 定</el-button>
+        <el-button size="medium" @click="$emit('close')">取 消</el-button>
       </span>
     </el-dialog>
     <listenerParam v-if="showParamDialog" :value="formData.executionListener[nowIndex].params" @close="finishConfigParam" />

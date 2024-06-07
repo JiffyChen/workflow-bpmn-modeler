@@ -35,13 +35,14 @@ export default {
           {
             xType: 'input',
             name: 'id',
-            label: '节点 id',
-            rules: [{ required: true, message: 'Id 不能为空' }]
+            label: '节点编码',
+            rules: [{ required: true, message: '节点编码不能为空' }]
           },
           {
             xType: 'input',
             name: 'name',
-            label: '节点名称'
+            label: '节点名称',
+            rules: [{ required: true, message: '节点名称不能为空' }]
           },
           {
             xType: 'input',

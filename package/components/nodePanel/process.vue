@@ -58,13 +58,14 @@ export default {
           {
             xType: 'input',
             name: 'id',
-            label: '流程标识key',
-            rules: [{ required: true, message: 'Id 不能为空' }]
+            label: '流程编码',
+            rules: [{ required: true, message: '编码不能为空' }]
           },
           {
             xType: 'input',
             name: 'name',
-            label: '流程名称'
+            label: '流程名称',
+            rules: [{ required: true, message: '名称不能为空' }]
           },
           {
             xType: 'input',

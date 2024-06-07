@@ -8,6 +8,7 @@
       :close-on-press-escape="false"
       :show-close="false"
       @closed="$emit('close')"
+      append-to-body
     >
       <x-form ref="xForm" v-model="formData" :config="formConfig">
         <template #params="scope">

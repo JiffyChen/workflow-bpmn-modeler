@@ -9,6 +9,7 @@
       :show-close="false"
       class="muti-instance"
       @closed="$emit('close')"
+      append-to-body
     >
       <el-alert
         type="info"
